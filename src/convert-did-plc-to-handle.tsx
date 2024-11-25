@@ -11,24 +11,28 @@ export default function Command() {
 
   async function handleSubmit(values: CommandForm) {
     setIsLoading(true);
-    const input = values.input.trim();
+    const input = values.input.trim().replace(/^at:\/\//, "");
 
     try {
-      // Extract handle from URL or use input directly
-      const handle = extractHandleFromInput(input);
-      const did = await resolveDID(handle);
-
-      // Copy to clipboard and show success toast
-      await copyToClipboard(did);
-      await showToast({
-        style: Toast.Style.Success,
-        title: "DID copied to clipboard",
-        message: did,
-      });
+      if (validateDidPlc(input)) {
+        const did = await resolveDID(input);
+        await copyToClipboard(did);
+        await showToast({
+          style: Toast.Style.Success,
+          title: "Hnadle copied to clipboard",
+          message: did,
+        });
+      } else {
+        await showToast({
+          style: Toast.Style.Failure,
+          title: "Failed to resolve handle",
+          message: "Invalid did:plc",
+        });
+      }
     } catch (error) {
       await showToast({
         style: Toast.Style.Failure,
-        title: "Failed to resolve DID",
+        title: "Failed to resolve handle",
         message: error instanceof Error ? error.message : "Unknown error",
       });
     } finally {
@@ -50,21 +54,13 @@ export default function Command() {
   );
 }
 
-function extractHandleFromInput(input: string): string {
-  // Handle URLs like https://bsky.app/profile/someone.bsky.social
-  if (input.startsWith("http")) {
-    const url = new URL(input);
-    if (url.hostname === "bsky.app" && url.pathname.startsWith("/profile/")) {
-      return url.pathname.split("/profile/")[1];
-    }
-  }
-
-  // Remove @ if present
-  return input.startsWith("@") ? input.slice(1) : input;
+function validateDidPlc(input: string): boolean {
+  const didPattern = /^did:[a-z]+:[a-zA-Z0-9._:%-]*[a-zA-Z0-9._-]$/;
+  return didPattern.test(input);
 }
 
-async function resolveDID(handle: string): Promise<string> {
-  const response = await fetch(`https://api.bsky.app/xrpc/com.atproto.identity.resolveHandle?handle=${handle}`, {
+async function resolveDID(didPlc: string): Promise<string> {
+  const response = await fetch(`https://plc.directory/${didPlc}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -76,7 +72,7 @@ async function resolveDID(handle: string): Promise<string> {
   }
 
   const data = await response.json();
-  return data.did;
+  return data.alsoKnownAs[0].replace(/^at:\/\//, "");
 }
 
 async function copyToClipboard(text: string): Promise<void> {

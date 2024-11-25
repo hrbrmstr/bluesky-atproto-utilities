@@ -3,7 +3,7 @@
   "name": "bluesky-atproto-utilities",
   "title": "Bluesky/ATproto Utilities",
   "description": "Various helper commands to work with Bluesky/ATproto URLs, handles, DIDs, etc.",
-  "icon": "extension-icon.png",
+  "icon": "butterfly.png",
   "author": "hrbrmstr",
   "owner": "hrbrmstr-org",
   "categories": [
@@ -16,11 +16,24 @@
       "title": "Convert handle to did:plc",
       "description": "Takes in a Bluesky handle link or a bare handle and returns the did:plc for it.",
       "mode": "view"
+    },
+    {
+      "name": "convert-did-plc-to-handle",
+      "title": "Convert did:plc to handle",
+      "description": "Takes in a did:plc and returns the handle for it.",
+      "mode": "view"
+    },
+    {
+      "name": "get-profile",
+      "title": "Retrieve profile info for an actor",
+      "description": "Takes in a did:plc or handle and shows what Bluesky knows about them.",
+      "mode": "view"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.86.0",
-    "@raycast/utils": "^1.17.0"
+    "@raycast/utils": "^1.17.0",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.11",
