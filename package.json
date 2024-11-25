@@ -5,6 +5,7 @@
   "description": "Various helper commands to work with Bluesky/atproto URLs, handles, DIDs, etc.",
   "icon": "butterfly.png",
   "author": "hrbrmstr",
+  "version": "0.1.0",
   "categories": [
     "Data"
   ],
