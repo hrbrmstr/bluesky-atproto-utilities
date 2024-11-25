@@ -6,6 +6,27 @@ interface CommandForm {
   input: string;
 }
 
+interface DidPLC {
+  "@context": string[];
+  id: string;
+  alsoKnownAs: string[];
+  verificationMethod: VerificationMethod[];
+  service: Service[];
+}
+
+interface Service {
+  id: string;
+  type: string;
+  serviceEndpoint: string;
+}
+
+interface VerificationMethod {
+  id: string;
+  type: string;
+  controller: string;
+  publicKeyMultibase: string;
+}
+
 export default function Command() {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -71,7 +92,7 @@ async function resolveDID(didPlc: string): Promise<string> {
     throw new Error(`Failed to resolve handle: ${response.statusText}`);
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as DidPLC;
   return data.alsoKnownAs[0].replace(/^at:\/\//, "");
 }
 

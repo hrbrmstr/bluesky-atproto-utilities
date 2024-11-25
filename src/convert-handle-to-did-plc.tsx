@@ -6,6 +6,10 @@ interface CommandForm {
   input: string;
 }
 
+interface Did {
+  did: string;
+}
+
 export default function Command() {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -75,7 +79,7 @@ async function resolveDID(handle: string): Promise<string> {
     throw new Error(`Failed to resolve handle: ${response.statusText}`);
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as Did;
   return data.did;
 }
 

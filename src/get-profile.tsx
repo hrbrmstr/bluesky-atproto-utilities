@@ -1,9 +1,42 @@
-import { ActionPanel, Detail, Action, Clipboard, showToast, Toast, Form } from "@raycast/api";
+import { ActionPanel, Detail, Action, Form } from "@raycast/api";
 import { useState } from "react";
 import fetch from "node-fetch";
 
 interface CommandForm {
   input: string;
+}
+
+interface Profile {
+  did: string;
+  handle: string;
+  displayName: string;
+  avatar: string;
+  associated: Associated;
+  createdAt: Date;
+  description: string;
+  indexedAt: Date;
+  banner: string;
+  followersCount: number;
+  followsCount: number;
+  postsCount: number;
+  pinnedPost: PinnedPost;
+}
+
+interface Associated {
+  lists: number;
+  feedgens: number;
+  starterPacks: number;
+  labeler: boolean;
+  chat: Chat;
+}
+
+interface Chat {
+  allowIncoming: string;
+}
+
+interface PinnedPost {
+  cid: string;
+  uri: string;
 }
 
 export default function Command() {
@@ -42,7 +75,7 @@ export default function Command() {
   );
 }
 
-function createProfileMarkdown(profile: any): string {
+function createProfileMarkdown(profile: Profile): string {
   return `
 # ${profile.displayName} ([@${profile.handle}](https://bsky.app/profile/${profile.handle}))
 
@@ -65,7 +98,7 @@ ${profile.banner ? `\n![Banner](${profile.banner})` : ""}
 `;
 }
 
-async function getProfile(actor: string): Promise<any> {
+async function getProfile(actor: string): Promise<Profile> {
   const response = await fetch(`https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=${actor}`, {
     method: "GET",
     headers: {
@@ -78,5 +111,6 @@ async function getProfile(actor: string): Promise<any> {
   }
 
   const data = await response.json();
-  return data;
+  const typedData = data as Profile;
+  return typedData;
 }

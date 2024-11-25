@@ -1,11 +1,10 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "bluesky-atproto-utilities",
-  "title": "Bluesky/ATproto Utilities",
-  "description": "Various helper commands to work with Bluesky/ATproto URLs, handles, DIDs, etc.",
+  "title": "Bluesky/atproto Utilities",
+  "description": "Various helper commands to work with Bluesky/atproto URLs, handles, DIDs, etc.",
   "icon": "butterfly.png",
   "author": "hrbrmstr",
-  "owner": "hrbrmstr-org",
   "categories": [
     "Data"
   ],
@@ -13,19 +12,19 @@
   "commands": [
     {
       "name": "convert-handle-to-did-plc",
-      "title": "Convert handle to did:plc",
+      "title": "Convert Handle to Did:plc",
       "description": "Takes in a Bluesky handle link or a bare handle and returns the did:plc for it.",
       "mode": "view"
     },
     {
       "name": "convert-did-plc-to-handle",
-      "title": "Convert did:plc to handle",
+      "title": "Convert Did:plc to Handle",
       "description": "Takes in a did:plc and returns the handle for it.",
       "mode": "view"
     },
     {
       "name": "get-profile",
-      "title": "Retrieve profile info for an actor",
+      "title": "Retrieve Profile Info for an Actor",
       "description": "Takes in a did:plc or handle and shows what Bluesky knows about them.",
       "mode": "view"
     }
