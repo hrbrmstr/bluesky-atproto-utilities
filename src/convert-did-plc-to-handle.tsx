@@ -40,7 +40,7 @@ export default function Command() {
         await copyToClipboard(did);
         await showToast({
           style: Toast.Style.Success,
-          title: "Hnadle copied to clipboard",
+          title: "Handle copied to clipboard",
           message: did,
         });
       } else {

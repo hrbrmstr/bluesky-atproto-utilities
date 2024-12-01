@@ -5,12 +5,18 @@
   "description": "Various helper commands to work with Bluesky/atproto URLs, handles, DIDs, etc.",
   "icon": "butterfly.png",
   "author": "hrbrmstr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "categories": [
     "Data"
   ],
   "license": "MIT",
   "commands": [
+    {
+      "name": "retrieve-bluesky-list-info",
+      "title": "Retrieve information about a Bluesky List",
+      "description": "Takes in a Bluesky list link and returns information about it.",
+      "mode": "view"
+    },
     {
       "name": "convert-handle-to-did-plc",
       "title": "Convert Handle to Did:plc",

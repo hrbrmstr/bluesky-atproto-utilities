@@ -67,7 +67,7 @@ function extractHandleFromInput(input: string): string {
   return input.startsWith("@") ? input.slice(1) : input;
 }
 
-async function resolveDID(handle: string): Promise<string> {
+export async function resolveDID(handle: string): Promise<string> {
   const response = await fetch(`https://api.bsky.app/xrpc/com.atproto.identity.resolveHandle?handle=${handle}`, {
     method: "GET",
     headers: {
